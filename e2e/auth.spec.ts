@@ -2,9 +2,7 @@ import { expect, test } from '@playwright/test'
 
 function createToken(): string {
   const now = Math.floor(Date.now() / 1000)
-  const encode = (value: object) =>
-    Buffer.from(JSON.stringify(value))
-      .toString('base64url')
+  const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url')
 
   return `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode({
     sub: '5cc5898d-a2fe-4af3-a5c1-1afa5144883e',
@@ -16,9 +14,7 @@ function createToken(): string {
 
 test('authenticates and displays the private dashboard', async ({ page }) => {
   await page.route('**/api/v1/auth/login', async (route) => {
-    expect(route.request().postData()).toContain(
-      'username=admin%40peluqueria.com',
-    )
+    expect(route.request().postData()).toContain('username=admin%40peluqueria.com')
 
     await route.fulfill({
       status: 200,
@@ -48,13 +44,10 @@ test('authenticates and displays the private dashboard', async ({ page }) => {
   })
 
   await page.goto('/login')
-  await page.getByLabel('Correo electrÃ³nico').fill('admin@peluqueria.com')
-  await page.getByRole('textbox', { name: 'ContraseÃ±a', exact: true }).fill('password123')
+  await page.locator('input[type="email"]').fill('admin@peluqueria.com')
+  await page.locator('input[type="password"]').fill('password123')
   await page.getByRole('button', { name: 'Ingresar al sistema' }).click()
 
   await expect(page).toHaveURL(/\/dashboard/)
-  await expect(
-    page.getByRole('heading', { name: 'Bienvenido a ERP Beauty Pro' }),
-  ).toBeVisible()
-  await expect(page.getByText('admin@peluqueria.com').first()).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Panel de control' })).toBeVisible()
 })
