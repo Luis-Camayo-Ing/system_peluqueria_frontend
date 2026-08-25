@@ -1,8 +1,23 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
-// See here how to get started:
-// https://playwright.dev/docs/intro
-test('visits the app root url', async ({ page }) => {
+test('renders the ERP Beauty Pro initial screen', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('h1')).toHaveText('You did it!')
+
+  await expect(
+    page.getByRole('heading', {
+      name: 'ERP Beauty Pro',
+    }),
+  ).toBeVisible()
+
+  await expect(page.getByText('Sistema integral para la gestión de peluquerías')).toBeVisible()
+
+  await expect(
+    page.getByText('El frontend del ERP Beauty Pro se inicializó correctamente.'),
+  ).toBeVisible()
+
+  await expect(
+    page.getByRole('button', {
+      name: 'Frontend inicializado',
+    }),
+  ).toBeVisible()
 })
