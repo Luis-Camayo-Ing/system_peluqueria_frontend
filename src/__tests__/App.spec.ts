@@ -1,31 +1,22 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import App from '../App.vue'
-import vuetify from '../plugins/vuetify'
-
-vi.stubGlobal(
-  'ResizeObserver',
-  class {
-    observe() {}
-
-    unobserve() {}
-
-    disconnect() {}
-  },
-)
+import App from '@/App.vue'
+import vuetify from '@/plugins/vuetify'
 
 describe('App', () => {
-  it('renders the ERP Beauty Pro initial screen', () => {
+  it('provides the root application container', () => {
     const wrapper = mount(App, {
       global: {
         plugins: [vuetify],
+        stubs: {
+          RouterView: {
+            template: '<div data-testid="router-view" />',
+          },
+        },
       },
     })
 
-    expect(wrapper.text()).toContain('ERP Beauty Pro')
-    expect(wrapper.text()).toContain('Sprint 20')
-    expect(wrapper.text()).toContain('El frontend del ERP Beauty Pro se inicializó correctamente.')
-    expect(wrapper.find('.mdi-content-cut').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="router-view"]').exists()).toBe(true)
   })
 })
