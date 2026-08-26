@@ -63,6 +63,12 @@ onBeforeUnmount(() => {
         title="Dashboard"
         rounded="lg"
       />
+      <VListItem
+        to="/appointments"
+        prepend-icon="mdi-calendar-clock-outline"
+        title="Agenda y citas"
+        rounded="lg"
+      />
     </VList>
 
     <template #append>

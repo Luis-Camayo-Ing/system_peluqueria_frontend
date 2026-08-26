@@ -43,6 +43,16 @@ test('authenticates and displays the private dashboard', async ({ page }) => {
     })
   })
 
+  await page.route('**/api/v1/dashboard**', async (route) => {
+    await route.fulfill({
+      status: 503,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        detail: 'Dashboard omitted from authentication test',
+      }),
+    })
+  })
+
   await page.goto('/login')
   await page.locator('input[type="email"]').fill('admin@peluqueria.com')
   await page.locator('input[type="password"]').fill('password123')
