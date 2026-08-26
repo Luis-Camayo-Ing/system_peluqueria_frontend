@@ -31,7 +31,7 @@ const appointmentStatusLabels: Record<AppointmentStatus, string> = {
   in_progress: 'En proceso',
   completed: 'Completadas',
   cancelled: 'Canceladas',
-  no_show: 'No asistiÃ³',
+  no_show: 'No asistió',
 }
 
 const movementLabels: Record<string, string> = {

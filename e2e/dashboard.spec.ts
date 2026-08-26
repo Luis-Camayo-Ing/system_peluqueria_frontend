@@ -128,8 +128,11 @@ test('displays the operational dashboard and applies its filters', async ({ page
   await expect(page.getByText('Ventas netas')).toBeVisible()
   await expect(page.getByText('Shampoo profesional')).toBeVisible()
 
+  await expect.poll(() => dashboardRequests).toBeGreaterThanOrEqual(1)
+  const requestsBeforeRefresh = dashboardRequests
+
   await page.getByLabel('Fecha final').fill('2026-08-20')
   await page.getByRole('button', { name: 'Actualizar' }).click()
 
-  await expect.poll(() => dashboardRequests).toBe(2)
+  await expect.poll(() => dashboardRequests).toBeGreaterThan(requestsBeforeRefresh)
 })

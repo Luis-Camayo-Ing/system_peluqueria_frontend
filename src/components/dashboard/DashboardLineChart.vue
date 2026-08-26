@@ -84,7 +84,7 @@ const areaPath = computed(() => {
 
   <div v-else class="chart-empty">
     <VIcon icon="mdi-chart-line-variant" size="36" />
-    <p>No hay ventas completadas en el perÃ­odo.</p>
+    <p>No hay ventas completadas en el período.</p>
   </div>
 </template>
 
