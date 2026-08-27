@@ -34,6 +34,47 @@ const router = createRouter({
           name: 'appointments',
           component: () => import('@/views/appointments/AppointmentsView.vue'),
         },
+        {
+          path: 'customers-services',
+          name: 'customers-services',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'customers-services' },
+        },
+        {
+          path: 'sales',
+          name: 'sales-pos',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'sales-pos' },
+        },
+        {
+          path: 'inventory',
+          name: 'inventory',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'inventory' },
+        },
+        {
+          path: 'cash-register',
+          name: 'cash-register',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'cash-register' },
+        },
+        {
+          path: 'purchases',
+          name: 'purchases',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'purchases' },
+        },
+        {
+          path: 'administration',
+          name: 'administration',
+          component: () => import('@/views/operations/OperationsView.vue'),
+          meta: { operationsModule: 'administration' },
+        },
+        {
+          path: 'reports',
+          name: 'reports',
+          component: () => import('@/views/reports/ReportsView.vue'),
+        },
       ],
     },
     {
