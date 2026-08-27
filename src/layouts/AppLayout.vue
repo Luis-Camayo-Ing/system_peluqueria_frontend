@@ -69,6 +69,25 @@ onBeforeUnmount(() => {
         title="Agenda y citas"
         rounded="lg"
       />
+      <VListSubheader class="mt-3">OPERACIÓN</VListSubheader>
+      <VListItem
+        to="/customers-services"
+        prepend-icon="mdi-account-heart-outline"
+        title="Clientes y servicios"
+        rounded="lg"
+      />
+      <VListItem to="/sales" prepend-icon="mdi-point-of-sale" title="Ventas y POS" rounded="lg" />
+      <VListItem to="/inventory" prepend-icon="mdi-warehouse" title="Inventario" rounded="lg" />
+      <VListItem to="/cash-register" prepend-icon="mdi-cash-register" title="Caja" rounded="lg" />
+      <VListItem to="/purchases" prepend-icon="mdi-cart-arrow-down" title="Compras" rounded="lg" />
+      <VListSubheader class="mt-3">GESTIÓN</VListSubheader>
+      <VListItem
+        to="/administration"
+        prepend-icon="mdi-cog-outline"
+        title="Administración"
+        rounded="lg"
+      />
+      <VListItem to="/reports" prepend-icon="mdi-chart-box-outline" title="Reportes" rounded="lg" />
     </VList>
 
     <template #append>
@@ -83,7 +102,7 @@ onBeforeUnmount(() => {
   </VNavigationDrawer>
 
   <VAppBar elevation="0" border="b">
-    <VAppBarNavIcon aria-label="Mostrar u ocultar menÚ" @click="drawer = !drawer" />
+    <VAppBarNavIcon aria-label="Mostrar u ocultar menú" @click="drawer = !drawer" />
 
     <VAppBarTitle>
       <span class="app-bar-title">Panel administrativo</span>
@@ -91,7 +110,7 @@ onBeforeUnmount(() => {
 
     <VMenu location="bottom end">
       <template #activator="{ props }">
-        <VBtn v-bind="props" variant="text" class="user-button" aria-label="Abrir menÚ del usuario">
+        <VBtn v-bind="props" variant="text" class="user-button" aria-label="Abrir menú del usuario">
           <VAvatar color="secondary" size="36">{{ userInitial }}</VAvatar>
           <div class="user-button__information">
             <strong>{{ authStore.user?.email }}</strong>
