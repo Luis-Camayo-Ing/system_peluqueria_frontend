@@ -15,7 +15,7 @@ export default defineConfig({
     vuetify({
       autoImport: true,
     }),
-    vueDevTools(),
+    ...(process.env.NODE_ENV === 'development' ? [vueDevTools()] : []),
   ],
 
   resolve: {
@@ -31,5 +31,11 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+
+  build: {
+    target: 'es2022',
+    sourcemap: false,
+    chunkSizeWarningLimit: 600,
   },
 })

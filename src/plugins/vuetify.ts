@@ -21,7 +21,7 @@ export default createVuetify({
           background: '#F4F7F9',
           surface: '#FFFFFF',
           primary: '#17324D',
-          secondary: '#2F918C',
+          secondary: '#1F7A75',
           success: '#2E7D32',
           warning: '#ED6C02',
           error: '#C62828',

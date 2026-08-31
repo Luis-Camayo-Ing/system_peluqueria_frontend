@@ -61,15 +61,15 @@ const areaPath = computed(() => {
         :y2="padding + ((line - 1) * (height - padding * 2)) / 3"
         class="line-chart__grid"
       />
-      <path :d="areaPath" :fill="color ?? '#2f918c'" fill-opacity="0.11" />
-      <path :d="linePath" :stroke="color ?? '#2f918c'" class="line-chart__line" />
+      <path :d="areaPath" :fill="color ?? '#1f7a75'" fill-opacity="0.11" />
+      <path :d="linePath" :stroke="color ?? '#1f7a75'" class="line-chart__line" />
       <circle
         v-for="point in coordinates"
         :key="`${point.label}-${point.x}`"
         :cx="point.x"
         :cy="point.y"
         r="4"
-        :fill="color ?? '#2f918c'"
+        :fill="color ?? '#1f7a75'"
       >
         <title>{{ point.label }}: {{ formatCurrency(point.value) }}</title>
       </circle>
@@ -111,7 +111,7 @@ const areaPath = computed(() => {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  color: #71808d;
+  color: #637381;
   font-size: 0.78rem;
 }
 
@@ -125,7 +125,7 @@ const areaPath = computed(() => {
   place-content: center;
   justify-items: center;
   gap: 10px;
-  color: #788895;
+  color: #637381;
   text-align: center;
 }
 

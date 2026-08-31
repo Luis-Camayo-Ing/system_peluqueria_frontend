@@ -54,6 +54,7 @@ export interface ResourceActionDefinition {
   confirmMessage?: string
   download?: boolean
   itemIdPayloadKey?: string
+  allowOnProtected?: boolean
 }
 
 export interface ResourceDefinition {

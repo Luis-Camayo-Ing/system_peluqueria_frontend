@@ -1,73 +1,47 @@
-# .
+# ERP Beauty Pro — Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicación administrativa en Vue 3, TypeScript, Pinia y Vuetify. El Sprint 30 prepara la versión 1.0.0 para producción con CI, pruebas automatizadas, accesibilidad, límites de rendimiento y una imagen Nginx endurecida.
 
-## Recommended IDE Setup
+## Requisitos
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Node.js 24.18 o posterior compatible con `package.json`.
+- npm 11 o posterior.
+- Backend disponible en `http://127.0.0.1:8000` durante el desarrollo.
 
-## Recommended Browser Setup
+## Desarrollo
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+```bash
+npm ci
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+La aplicación queda en `http://localhost:5173`. Copia `.env.example` a `.env` solo si necesitas cambiar la API o el tiempo de espera.
 
-```sh
+## Validación local
+
+```bash
+npm run format:check
+npm run lint:check
+npm run type-check
+npm run test:unit:run
 npm run build
+npm run test:performance
+npm run test:e2e:ci
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Antes de la primera prueba E2E instala Chromium:
 
-```sh
-npm run test:unit
+```bash
+npx playwright install chromium
 ```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+## Producción con contenedor
 
-```sh
-# Install browsers for the first run
-npx playwright install
+La imagen compila los recursos con Node y los sirve con Nginx sin privilegios en el puerto `8080`. Nginx añade cabeceras de seguridad, compresión, caché para recursos versionados, límite de solicitudes al inicio de sesión y proxy de `/api` hacia `backend:8000`.
 
-# When testing on CI, must build the project first
-npm run build
-
-# Runs the end-to-end tests
-npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
+```bash
+docker build -t erp-beauty-pro-frontend:1.0.0 .
+docker run --rm -p 8080:8080 erp-beauty-pro-frontend:1.0.0
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Para levantar todo el sistema utiliza `compose.yaml` del repositorio backend. Consulta [docs/QA_RELEASE.md](docs/QA_RELEASE.md) para la lista de salida.

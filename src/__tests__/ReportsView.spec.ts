@@ -27,7 +27,7 @@ describe('ReportsView', () => {
     await flushPromises()
 
     expect(wrapper.get('h1').text()).toBe('Reportes')
-    expect(wrapper.text()).toContain('Total Sales')
+    expect(wrapper.text()).toContain('Ventas totales')
     expect(wrapper.text()).toContain('125.000')
     expect(operationsServiceMocks.report).toHaveBeenCalledWith(
       '/reports/sales',

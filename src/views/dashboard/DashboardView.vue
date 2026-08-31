@@ -116,7 +116,7 @@ const cashFlowBars = computed<ChartBar[]>(() =>
   (dashboard.value?.charts.daily_cash_flow ?? []).map((metric) => ({
     label: formatDate(metric.date),
     value: decimalToNumber(metric.net_amount),
-    color: decimalToNumber(metric.net_amount) >= 0 ? '#2f918c' : '#d84a4a',
+    color: decimalToNumber(metric.net_amount) >= 0 ? '#1f7a75' : '#d84a4a',
   })),
 )
 
@@ -132,7 +132,7 @@ const inventoryMovementBars = computed<ChartBar[]>(() =>
   (dashboard.value?.charts.inventory_movements ?? []).map((metric) => ({
     label: getMovementLabel(metric.movement_type),
     value: decimalToNumber(metric.quantity),
-    color: metric.movement_type.includes('exit') ? '#e67e45' : '#2f918c',
+    color: metric.movement_type.includes('exit') ? '#e67e45' : '#1f7a75',
   })),
 )
 
@@ -402,7 +402,7 @@ onMounted(() => dashboardStore.loadDashboard())
 
 .empty-dashboard p {
   margin: 0;
-  color: #71808d;
+  color: #637381;
 }
 
 @media (max-width: 700px) {

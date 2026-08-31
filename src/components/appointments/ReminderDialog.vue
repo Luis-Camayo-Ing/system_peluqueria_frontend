@@ -127,7 +127,7 @@ function submit(): void {
 }
 
 .management-title span {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -170,7 +170,7 @@ function submit(): void {
 
 .reminder-list span,
 .empty-copy {
-  color: #71808c;
+  color: #637381;
   font-size: 0.8rem;
 }
 

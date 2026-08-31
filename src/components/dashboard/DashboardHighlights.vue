@@ -166,7 +166,7 @@ defineProps<{
 
 .ranking-item small {
   margin-top: 3px;
-  color: #758592;
+  color: #637381;
   font-size: 0.72rem;
 }
 
@@ -174,7 +174,7 @@ defineProps<{
   min-height: 150px;
   display: grid;
   place-content: center;
-  color: #7a8994;
+  color: #637381;
   text-align: center;
 }
 </style>

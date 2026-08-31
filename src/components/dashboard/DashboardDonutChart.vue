@@ -22,7 +22,7 @@ const donutStyle = computed(() => {
       const start = accumulatedPercentage
       accumulatedPercentage += (item.value / total.value) * 100
 
-      return `${item.color ?? '#2f918c'} ${start}% ${accumulatedPercentage}%`
+      return `${item.color ?? '#1f7a75'} ${start}% ${accumulatedPercentage}%`
     })
 
   return { background: `conic-gradient(${segments.join(', ')})` }
@@ -40,7 +40,7 @@ const donutStyle = computed(() => {
 
     <div class="donut-chart__legend">
       <div v-for="item in items" :key="item.label" class="legend-item">
-        <span class="legend-item__color" :style="{ backgroundColor: item.color ?? '#2f918c' }" />
+        <span class="legend-item__color" :style="{ backgroundColor: item.color ?? '#1f7a75' }" />
         <span>{{ item.label }}</span>
         <strong>{{ formatInteger(item.value) }}</strong>
       </div>
@@ -80,7 +80,7 @@ const donutStyle = computed(() => {
 }
 
 .donut-chart__center span {
-  color: #71808d;
+  color: #637381;
   font-size: 0.75rem;
 }
 
