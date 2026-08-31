@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
     </VMenu>
   </VAppBar>
 
-  <VMain class="main-content">
+  <VMain id="main-content" class="main-content" tabindex="-1">
     <RouterView />
   </VMain>
 </template>
@@ -151,7 +151,7 @@ onBeforeUnmount(() => {
   width: 42px;
   height: 42px;
   color: #ffffff;
-  background: linear-gradient(135deg, #2f918c, #17324d);
+  background: linear-gradient(135deg, #1f7a75, #17324d);
   border-radius: 12px;
   place-items: center;
 }
@@ -165,7 +165,7 @@ onBeforeUnmount(() => {
 
 .brand__caption {
   margin: 2px 0 0;
-  color: #7a8793;
+  color: #637381;
   font-size: 0.73rem;
 }
 
@@ -226,7 +226,7 @@ onBeforeUnmount(() => {
 }
 
 .user-button__information span {
-  color: #7a8793;
+  color: #637381;
   font-size: 0.7rem;
 }
 

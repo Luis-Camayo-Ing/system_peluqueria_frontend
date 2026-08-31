@@ -27,6 +27,8 @@ const resultDialog = ref(false)
 const editingItem = ref<ApiRecord | null>(null)
 const selectedItem = ref<ApiRecord | null>(null)
 const selectedAction = ref<ResourceActionDefinition | null>(null)
+const formRef = ref<{ validate: () => Promise<{ valid: boolean }> } | null>(null)
+const actionFormRef = ref<{ validate: () => Promise<{ valid: boolean }> } | null>(null)
 const form = reactive<Record<string, unknown>>({})
 const actionForm = reactive<Record<string, unknown>>({})
 
@@ -62,6 +64,16 @@ function fieldOptions(field: FieldDefinition) {
 function isProtected(item: ApiRecord): boolean {
   const key = activeResource.value.protectedFlagKey
   return key ? item[key] === true : false
+}
+
+function visibleActions(item: ApiRecord): ResourceActionDefinition[] {
+  return (activeResource.value.actions ?? []).filter(
+    (action) => !isProtected(item) || action.allowOnProtected,
+  )
+}
+
+function itemLabel(item: ApiRecord): string {
+  return String(item.name ?? item.email ?? item.id ?? activeResource.value.singular)
 }
 
 function requiredRule(field: FieldDefinition) {
@@ -158,6 +170,9 @@ async function openEdit(item: ApiRecord): Promise<void> {
 }
 
 async function save(): Promise<void> {
+  const validation = await formRef.value?.validate()
+  if (validation && !validation.valid) return
+
   try {
     const values = normalizeValues(form, activeResource.value.fields)
     const saved = await operationsStore.save(activeResource.value, values, {
@@ -202,6 +217,9 @@ async function prepareAction(action: ResourceActionDefinition, item: ApiRecord):
 
 async function executeAction(): Promise<void> {
   if (!selectedAction.value || !selectedItem.value) return
+
+  const validation = await actionFormRef.value?.validate()
+  if (validation && !validation.valid) return
 
   try {
     const values = normalizeValues(actionForm, selectedAction.value.fields ?? [])
@@ -339,17 +357,17 @@ onMounted(() => void changeResource())
                     icon="mdi-pencil-outline"
                     size="small"
                     variant="text"
-                    aria-label="Editar"
+                    :aria-label="`Editar ${itemLabel(item)}`"
                     @click="openEdit(item)"
                   />
                   <VBtn
-                    v-for="action in activeResource.actions"
+                    v-for="action in visibleActions(item)"
                     :key="action.key"
                     :icon="action.icon"
                     :color="action.color"
                     size="small"
                     variant="text"
-                    :aria-label="action.label"
+                    :aria-label="`${action.label} ${itemLabel(item)}`"
                     @click="prepareAction(action, item)"
                   />
                   <VBtn
@@ -358,7 +376,7 @@ onMounted(() => void changeResource())
                     color="error"
                     size="small"
                     variant="text"
-                    :aria-label="activeResource.deleteLabel ?? 'Eliminar'"
+                    :aria-label="`${activeResource.deleteLabel ?? 'Eliminar'} ${itemLabel(item)}`"
                     @click="remove(item)"
                   />
                 </td>
@@ -380,89 +398,93 @@ onMounted(() => void changeResource())
         <VCardTitle class="dialog-title">
           {{ editingItem ? 'Editar' : 'Crear' }} {{ activeResource.singular }}
         </VCardTitle>
-        <VCardText>
-          <VRow>
-            <VCol
-              v-for="field in visibleFields"
-              :key="`${field.key}-${field.label}`"
-              cols="12"
-              :md="field.kind === 'textarea' || field.kind === 'json' ? 12 : 6"
-            >
-              <VSwitch
-                v-if="field.kind === 'switch'"
-                v-model="form[field.key]"
-                :label="field.label"
-                color="secondary"
-                hide-details
-              />
-              <VSelect
-                v-else-if="field.kind === 'select'"
-                v-model="form[field.key]"
-                :label="field.label"
-                :items="fieldOptions(field)"
-                :rules="requiredRule(field)"
-                clearable
-              />
-              <VTextarea
-                v-else-if="field.kind === 'textarea' || field.kind === 'json'"
-                v-model="form[field.key]"
-                :label="field.label"
-                :rows="field.rows ?? 3"
-                :rules="requiredRule(field)"
-                :hint="field.help"
-                persistent-hint
-                :class="{ 'json-field': field.kind === 'json' }"
-              />
-              <VTextField
-                v-else
-                v-model="form[field.key]"
-                :label="field.label"
-                :type="inputType(field)"
-                :rules="requiredRule(field)"
-                :hint="field.help"
-                persistent-hint
-              />
-            </VCol>
-          </VRow>
-        </VCardText>
-        <VCardActions class="pa-4">
-          <VSpacer />
-          <VBtn variant="text" @click="formDialog = false">Cancelar</VBtn>
-          <VBtn color="primary" :loading="operationsStore.isSaving" @click="save">Guardar</VBtn>
-        </VCardActions>
+        <VForm ref="formRef" @submit.prevent="save">
+          <VCardText>
+            <VRow>
+              <VCol
+                v-for="field in visibleFields"
+                :key="`${field.key}-${field.label}`"
+                cols="12"
+                :md="field.kind === 'textarea' || field.kind === 'json' ? 12 : 6"
+              >
+                <VSwitch
+                  v-if="field.kind === 'switch'"
+                  v-model="form[field.key]"
+                  :label="field.label"
+                  color="secondary"
+                  hide-details
+                />
+                <VSelect
+                  v-else-if="field.kind === 'select'"
+                  v-model="form[field.key]"
+                  :label="field.label"
+                  :items="fieldOptions(field)"
+                  :rules="requiredRule(field)"
+                  clearable
+                />
+                <VTextarea
+                  v-else-if="field.kind === 'textarea' || field.kind === 'json'"
+                  v-model="form[field.key]"
+                  :label="field.label"
+                  :rows="field.rows ?? 3"
+                  :rules="requiredRule(field)"
+                  :hint="field.help"
+                  persistent-hint
+                  :class="{ 'json-field': field.kind === 'json' }"
+                />
+                <VTextField
+                  v-else
+                  v-model="form[field.key]"
+                  :label="field.label"
+                  :type="inputType(field)"
+                  :rules="requiredRule(field)"
+                  :hint="field.help"
+                  persistent-hint
+                />
+              </VCol>
+            </VRow>
+          </VCardText>
+          <VCardActions class="pa-4">
+            <VSpacer />
+            <VBtn variant="text" @click="formDialog = false">Cancelar</VBtn>
+            <VBtn color="primary" type="submit" :loading="operationsStore.isSaving"> Guardar </VBtn>
+          </VCardActions>
+        </VForm>
       </VCard>
     </VDialog>
 
     <VDialog v-model="actionDialog" max-width="620">
       <VCard rounded="xl">
         <VCardTitle class="dialog-title">{{ selectedAction?.label }}</VCardTitle>
-        <VCardText>
-          <template v-for="field in selectedAction?.fields" :key="field.key">
-            <VTextarea
-              v-if="field.kind === 'textarea' || field.kind === 'json'"
-              v-model="actionForm[field.key]"
-              :label="field.label"
-              :rows="field.rows ?? 3"
-              :rules="requiredRule(field)"
-              class="mb-2"
-            />
-            <VTextField
-              v-else
-              v-model="actionForm[field.key]"
-              :label="field.label"
-              :type="inputType(field)"
-              :rules="requiredRule(field)"
-              class="mb-2"
-            />
-          </template>
-        </VCardText>
-        <VCardActions class="pa-4">
-          <VSpacer />
-          <VBtn variant="text" @click="actionDialog = false">Cancelar</VBtn>
-          <VBtn color="primary" :loading="operationsStore.isSaving" @click="executeAction">
-            Confirmar
-          </VBtn>
-        </VCardActions>
+        <VForm ref="actionFormRef" @submit.prevent="executeAction">
+          <VCardText>
+            <template v-for="field in selectedAction?.fields" :key="field.key">
+              <VTextarea
+                v-if="field.kind === 'textarea' || field.kind === 'json'"
+                v-model="actionForm[field.key]"
+                :label="field.label"
+                :rows="field.rows ?? 3"
+                :rules="requiredRule(field)"
+                class="mb-2"
+              />
+              <VTextField
+                v-else
+                v-model="actionForm[field.key]"
+                :label="field.label"
+                :type="inputType(field)"
+                :rules="requiredRule(field)"
+                class="mb-2"
+              />
+            </template>
+          </VCardText>
+          <VCardActions class="pa-4">
+            <VSpacer />
+            <VBtn variant="text" @click="actionDialog = false">Cancelar</VBtn>
+            <VBtn color="primary" type="submit" :loading="operationsStore.isSaving">
+              Confirmar
+            </VBtn>
+          </VCardActions>
+        </VForm>
       </VCard>
     </VDialog>
 
@@ -509,7 +531,7 @@ onMounted(() => void changeResource())
 }
 
 .operations-header__eyebrow {
-  color: #2f918c !important;
+  color: #1f7a75 !important;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -563,7 +585,7 @@ onMounted(() => void changeResource())
 .empty-state {
   display: grid;
   min-height: 260px;
-  color: #7b8995;
+  color: #637381;
   place-items: center;
   align-content: center;
   gap: 8px;

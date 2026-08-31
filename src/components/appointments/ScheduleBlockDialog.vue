@@ -183,7 +183,7 @@ function submit(): void {
 }
 
 .management-title span {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -220,7 +220,7 @@ function submit(): void {
 
 .block-list span,
 .block-list small {
-  color: #71808c;
+  color: #637381;
   font-size: 0.78rem;
 }
 </style>

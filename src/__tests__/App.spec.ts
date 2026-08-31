@@ -18,5 +18,6 @@ describe('App', () => {
     })
 
     expect(wrapper.find('[data-testid="router-view"]').exists()).toBe(true)
+    expect(wrapper.get('.skip-link').attributes('href')).toBe('#main-content')
   })
 })

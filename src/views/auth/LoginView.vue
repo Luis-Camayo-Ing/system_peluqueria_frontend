@@ -59,7 +59,7 @@ async function handleSubmit(): Promise<void> {
 </script>
 
 <template>
-  <main class="login-page">
+  <main id="main-content" class="login-page" tabindex="-1">
     <div class="login-page__decoration" aria-hidden="true" />
 
     <VContainer class="login-container">
@@ -251,7 +251,7 @@ async function handleSubmit(): Promise<void> {
 }
 
 .form-panel__eyebrow {
-  color: #2f918c;
+  color: #1f7a75;
 }
 
 .form-panel__title {
@@ -271,7 +271,7 @@ async function handleSubmit(): Promise<void> {
   align-items: center;
   justify-content: center;
   margin-top: 28px;
-  color: #7a8793;
+  color: #637381;
   font-size: 0.78rem;
 }
 

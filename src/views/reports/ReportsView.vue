@@ -77,8 +77,96 @@ const sections = computed<ReportSection[]>(() => {
     }))
 })
 
+const reportLabels: Record<string, string> = {
+  totals: 'Resumen',
+  total_sales: 'Ventas totales',
+  net_revenue: 'Ingresos netos',
+  completed_sales_count: 'Ventas completadas',
+  cancelled_sales_count: 'Ventas canceladas',
+  cancelled_amount: 'Valor cancelado',
+  gross_subtotal: 'Subtotal bruto',
+  discount_amount: 'Descuentos',
+  tax_amount: 'Impuestos',
+  net_sales: 'Ventas netas',
+  average_ticket: 'Ticket promedio',
+  products_quantity: 'Cantidad de productos',
+  services_quantity: 'Cantidad de servicios',
+  payment_methods: 'Métodos de pago',
+  daily: 'Detalle diario',
+  date: 'Fecha',
+  sales_count: 'Cantidad de ventas',
+  payment_method: 'Método de pago',
+  payments_count: 'Cantidad de pagos',
+  amount: 'Valor',
+  total_products: 'Total de productos',
+  active_products: 'Productos activos',
+  inactive_products: 'Productos inactivos',
+  out_of_stock_products: 'Productos agotados',
+  low_stock_products: 'Productos con bajo inventario',
+  total_stock_units: 'Unidades en inventario',
+  inventory_cost_value: 'Valor del inventario al costo',
+  inventory_sale_value: 'Valor comercial del inventario',
+  movements_count: 'Cantidad de movimientos',
+  movements: 'Movimientos',
+  movement_type: 'Tipo de movimiento',
+  quantity: 'Cantidad',
+  low_stock_items: 'Productos que requieren atención',
+  product_id: 'UUID del producto',
+  code: 'Código',
+  name: 'Nombre',
+  current_stock: 'Existencia actual',
+  minimum_stock: 'Existencia mínima',
+  shortage_quantity: 'Cantidad faltante',
+  transactions_count: 'Cantidad de transacciones',
+  total_income: 'Ingresos totales',
+  total_expense: 'Egresos totales',
+  net_cash_flow: 'Flujo neto de caja',
+  sessions_opened: 'Sesiones abiertas',
+  sessions_closed: 'Sesiones cerradas',
+  opening_amount: 'Monto de apertura',
+  closing_difference: 'Diferencia de cierre',
+  sources: 'Movimientos por origen',
+  source: 'Origen',
+  income: 'Ingresos',
+  expense: 'Egresos',
+  net_amount: 'Valor neto',
+  registers: 'Cajas',
+  cash_register_id: 'UUID de la caja',
+  total_customers: 'Total de clientes',
+  active_customers: 'Clientes activos',
+  inactive_customers: 'Clientes inactivos',
+  new_customers: 'Clientes nuevos',
+  customers_with_purchases: 'Clientes con compras',
+  returning_customers: 'Clientes recurrentes',
+  sales_without_customer: 'Ventas sin cliente',
+  top_customers: 'Clientes destacados',
+  customer_id: 'UUID del cliente',
+  customer_name: 'Cliente',
+  purchases_count: 'Cantidad de compras',
+  total_spent: 'Total gastado',
+  total_services: 'Total de servicios',
+  active_services: 'Servicios activos',
+  inactive_services: 'Servicios inactivos',
+  services_sold: 'Servicios vendidos',
+  services_without_sales: 'Servicios sin ventas',
+  service_sales_count: 'Ventas de servicios',
+  service_quantity: 'Cantidad de servicios vendidos',
+  service_revenue: 'Ingresos por servicios',
+  top_services: 'Servicios destacados',
+  service_id: 'UUID del servicio',
+  service_name: 'Servicio',
+  revenue: 'Ingresos',
+  average_unit_price: 'Precio unitario promedio',
+}
+
 function label(value: string): string {
-  return value.replace(/_/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+  const normalized = value.trim().toLowerCase().replace(/\s+/g, '_')
+  const translated = reportLabels[normalized]
+
+  if (translated) return translated
+
+  const fallback = value.replace(/_/g, ' ')
+  return fallback.charAt(0).toUpperCase() + fallback.slice(1)
 }
 
 function formatValue(key: string, value: unknown): string {
@@ -181,7 +269,7 @@ onMounted(() => void loadReport())
   <VContainer fluid class="reports-page pa-4 pa-md-7">
     <header class="reports-header">
       <div>
-        <p>SPRINT UNIFICADO 23-29</p>
+        <p>ANÁLISIS OPERACIONAL</p>
         <h1>Reportes</h1>
         <span>Ventas, inventario, caja, clientes y servicios con filtros empresariales.</span>
       </div>
@@ -294,7 +382,7 @@ onMounted(() => void loadReport())
 }
 .reports-header p {
   margin: 0;
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;

@@ -55,7 +55,7 @@ defineProps<{
 .history__item span,
 .history__item small,
 .history__empty {
-  color: #71808c;
+  color: #637381;
   font-size: 0.78rem;
 }
 
