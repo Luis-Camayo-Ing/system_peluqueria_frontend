@@ -164,7 +164,7 @@ function updateField<K extends keyof AppointmentFilters>(
 }
 
 .filters-card__heading span {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;

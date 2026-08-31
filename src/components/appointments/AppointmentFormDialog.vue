@@ -312,7 +312,7 @@ function submit(): void {
 }
 
 .dialog-title span {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;

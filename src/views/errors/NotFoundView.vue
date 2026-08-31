@@ -9,7 +9,7 @@ const destination = computed(() => (authStore.isAuthenticated ? '/dashboard' : '
 </script>
 
 <template>
-  <VContainer class="not-found">
+  <VContainer id="main-content" class="not-found" role="main" tabindex="-1">
     <VCard max-width="560" class="pa-8 text-center" elevation="0">
       <VIcon icon="mdi-map-marker-question-outline" size="72" color="secondary" />
       <p class="not-found__code">404</p>
@@ -32,7 +32,7 @@ const destination = computed(() => (authStore.isAuthenticated ? '/dashboard' : '
 
 .not-found__code {
   margin: 18px 0 0;
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 4rem;
   font-weight: 900;
   line-height: 1;

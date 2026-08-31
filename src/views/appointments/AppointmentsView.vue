@@ -94,7 +94,7 @@ const summaryCards = computed(() => [
     value: appointmentStore.appointments.filter((appointment) => appointment.status === 'confirmed')
       .length,
     icon: 'mdi-calendar-check',
-    color: '#2f918c',
+    color: '#1f7a75',
   },
   {
     label: 'Requieren atención',
@@ -480,7 +480,7 @@ async function cancelReminder(reminder: AppointmentReminder): Promise<void> {
 }
 
 .page-header__eyebrow {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.17em;
@@ -519,7 +519,7 @@ async function cancelReminder(reminder: AppointmentReminder): Promise<void> {
 }
 
 .summary-card span {
-  color: #71808c;
+  color: #637381;
   font-size: 0.78rem;
 }
 

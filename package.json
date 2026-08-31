@@ -1,6 +1,6 @@
 {
   "name": "erp-beauty-pro-frontend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,13 +8,20 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "test:unit:run": "vitest --run",
     "test:e2e": "playwright test",
+    "test:e2e:ci": "playwright test --project=chromium --workers=1 --retries=0 --reporter=line",
+    "test:performance": "node scripts/check-bundle-size.mjs",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "lint": "run-s \"lint:*\"",
+    "lint": "run-s lint:oxlint lint:eslint",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/"
+    "lint:check": "run-s \"lint:check:*\"",
+    "lint:check:oxlint": "oxlint . --deny-warnings",
+    "lint:check:eslint": "eslint . --max-warnings=0",
+    "format": "prettier --write --experimental-cli src/ e2e/ scripts/",
+    "format:check": "prettier --check src/ e2e/ scripts/"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

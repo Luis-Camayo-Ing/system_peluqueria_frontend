@@ -564,11 +564,8 @@ const companyResource: ResourceDefinition = {
   icon: 'mdi-domain',
   description: 'Información legal y de contacto de las empresas.',
   listPath: '/companies',
-  createPath: '/companies',
   updatePath: '/companies/{id}',
   updateMethod: 'put',
-  deletePath: '/companies/{id}',
-  deleteLabel: 'Desactivar',
   columns: [
     { key: 'name', label: 'Empresa' },
     { key: 'tax_id', label: 'NIT' },
@@ -700,7 +697,6 @@ const roleResource: ResourceDefinition = {
     { key: 'company_id', label: 'Empresa', companyFromSession: true, createOnly: true },
     { key: 'name', label: 'Nombre', required: true },
     { key: 'description', label: 'Descripción', kind: 'textarea', rows: 2 },
-    { key: 'is_system_role', label: 'Rol de sistema', kind: 'switch', defaultValue: false },
     { key: 'is_active', label: 'Activo', kind: 'switch', defaultValue: true },
     { key: 'permission_ids', label: 'UUID de permisos', kind: 'json', defaultValue: [], rows: 4 },
   ],
@@ -724,11 +720,7 @@ const permissionResource: ResourceDefinition = {
   icon: 'mdi-shield-key-outline',
   description: 'Catálogo global de permisos RBAC.',
   listPath: '/permissions',
-  createPath: '/permissions',
-  updatePath: '/permissions/{id}',
-  updateMethod: 'put',
-  deletePath: '/permissions/{id}',
-  deleteLabel: 'Eliminar',
+  readOnly: true,
   columns: [
     { key: 'name', label: 'Permiso' },
     { key: 'description', label: 'Descripción' },
@@ -766,7 +758,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Clientes y servicios',
     subtitle: 'Relaciones comerciales y catálogo de atención.',
     icon: 'mdi-account-heart-outline',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [customerResource, serviceResource],
   },
   {
@@ -774,7 +766,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Ventas y POS',
     subtitle: 'Ventas mixtas, pagos y comprobantes internos.',
     icon: 'mdi-point-of-sale',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [salesResource],
   },
   {
@@ -782,7 +774,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Inventario',
     subtitle: 'Categorías, productos, existencias y movimientos.',
     icon: 'mdi-warehouse',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [categoryResource, productResource, movementResource],
   },
   {
@@ -790,7 +782,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Caja',
     subtitle: 'Cajas, sesiones, arqueo y transacciones.',
     icon: 'mdi-cash-register',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [registerResource, sessionResource, transactionResource],
   },
   {
@@ -798,7 +790,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Compras y proveedores',
     subtitle: 'Abastecimiento, órdenes y recepción de mercancía.',
     icon: 'mdi-cart-arrow-down',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [supplierResource, orderResource, receiptResource],
   },
   {
@@ -806,7 +798,7 @@ export const operationModules: ModuleDefinition[] = [
     title: 'Administración',
     subtitle: 'Empresa, personal, accesos, RBAC y auditoría.',
     icon: 'mdi-cog-outline',
-    sprint: 'Sprint unificado 23-29',
+    sprint: 'Operación integrada',
     resources: [
       companyResource,
       employeeResource,

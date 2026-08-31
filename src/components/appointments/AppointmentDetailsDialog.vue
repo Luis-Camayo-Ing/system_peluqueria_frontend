@@ -165,7 +165,7 @@ const emit = defineEmits<{
 }
 
 .details-title span {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -223,7 +223,7 @@ const emit = defineEmits<{
 }
 
 .empty-copy {
-  color: #71808c;
+  color: #637381;
   font-size: 0.84rem;
 }
 

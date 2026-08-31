@@ -144,7 +144,7 @@ const groupedAppointments = computed(() => {
 }
 
 .eyebrow {
-  color: #2f918c;
+  color: #1f7a75;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -177,7 +177,7 @@ const groupedAppointments = computed(() => {
   display: grid;
   width: 26px;
   height: 26px;
-  color: #2f918c;
+  color: #1f7a75;
   background: #ffffff;
   border-radius: 50%;
   font-size: 0.76rem;
@@ -227,7 +227,7 @@ const groupedAppointments = computed(() => {
 .calendar-empty {
   display: grid;
   min-height: 310px;
-  color: #71808c;
+  color: #637381;
   text-align: center;
   place-content: center;
 }

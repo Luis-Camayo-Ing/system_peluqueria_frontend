@@ -28,7 +28,7 @@ function getWidth(value: number): string {
           class="bar-chart__value"
           :style="{
             width: getWidth(item.value),
-            backgroundColor: item.color ?? '#2f918c',
+            backgroundColor: item.color ?? '#1f7a75',
           }"
         />
       </div>
@@ -81,7 +81,7 @@ function getWidth(value: number): string {
   place-content: center;
   justify-items: center;
   gap: 10px;
-  color: #788895;
+  color: #637381;
   text-align: center;
 }
 
